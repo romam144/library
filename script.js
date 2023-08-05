@@ -67,6 +67,7 @@ function addBookToLibrary(bookcard){
 
 function newBook(){
     const book = new Book(inputTitle.value, inputAuthor.value, inputPages.value, readCheck)
+    myLibrary.splice(-1)
     myLibrary.push(book)
     createInfo()
 
@@ -80,7 +81,7 @@ function createInfo(){
         let {name, author, pages, read} = book;
 
 
-        if(/^[A-Za-z0-9]*$/.test(name) === true && /^[A-Za-z0-9]*$/.test(author) === true &&  pages!== ''){
+        if(/([a-zA-Z0-9:\.\/\(\)\-\s])/g.test(name) === true && /^[A-Za-z0-9]*$/.test(author) === true &&  pages!== ''){
             const card = document.createElement('div');
             card.classList.add('card');
         
@@ -110,7 +111,10 @@ function createInfo(){
         
             addBookToLibrary(card)
         
-            removeBtn.addEventListener('click' , () => card.remove())
+            removeBtn.addEventListener('click' , function(){
+                card.remove();
+                myLibrary.pop(book);
+            })
     
             fadeoutAll()
     
